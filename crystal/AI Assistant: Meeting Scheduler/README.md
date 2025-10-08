@@ -49,28 +49,13 @@ function isMeetingRequest(email) {
 - Google account with Gmail and Calendar
 
 ### Setup Steps
-
-1. **Configure Google OAuth**:
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create OAuth credentials for Chrome extension
-   - Enable Gmail API and Google Calendar API
-   - Copy your Client ID
-
-2. **Update manifest.json**:
-   ```json
-   "oauth2": {
-     "client_id": "YOUR_CLIENT_ID.apps.googleusercontent.com",
-     ...
-   }
-   ```
-
-3. **Load Extension**:
+1. **Load Extension**:
    - Go to `chrome://extensions/`
    - Enable "Developer mode"
    - Click "Load unpacked"
    - Select the `phase-1-keyword` folder
 
-4. **Test in Gmail**:
+2. **Test in Gmail**:
    - Open Gmail
    - Extension will show onboarding modal
    - Connect with Google
@@ -122,16 +107,6 @@ const CONFIG = {
 ❌ **Misses**: "Would love to connect" (no keywords matched)
 ❌ **False positive**: "The meeting was great!" (has keyword but no "?")
 
-## Upgrading to Phase 2
-
-For more accurate AI-based detection, see the `phase-2-ai` folder which uses Claude API.
-
-**Phase 2 improvements**:
-- ~95% accuracy vs ~60% in Phase 1
-- Catches subtle requests
-- Confidence scoring
-- Reduces false positives
-
 ## Files
 
 ```
@@ -167,4 +142,4 @@ phase-1-keyword/
 
 ---
 
-**Want better accuracy?** Check out **Phase 2** with AI-powered detection!
+**Want better accuracy?** Ask about **Phase 2** with AI-powered detection!
