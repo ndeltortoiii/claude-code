@@ -381,11 +381,19 @@ function formatSlotLinksHTML(slots) {
       minute: '2-digit',
       timeZoneName: 'short'
     });
-    return `${index + 1}. ${timeStr} - <a href="${slot.confirmLink}" target="_blank" style="color: #1a73e8; text-decoration: none;">Click here to confirm</a>`;
-  }).join('<br>');
+    
+    // Primary method: Web confirmation (if available) or Google Calendar
+    const primaryLink = slot.confirmLink && !slot.confirmLink.includes('your-domain.com') 
+      ? slot.confirmLink 
+      : slot.calendarLink;
+    
+    return `${index + 1}. <strong>${timeStr}</strong><br>
+    &nbsp;&nbsp;&nbsp;• <a href="${primaryLink}" target="_blank" style="color: #1a73e8; text-decoration: none;">📅 Add to Calendar & Confirm</a><br>
+    &nbsp;&nbsp;&nbsp;• <a href="${slot.mailtoLink}" style="color: #1a73e8; text-decoration: none;">✉️ Reply to Confirm</a>`;
+  }).join('<br><br>');
 }
 
-// Format slot links as HTML for Gmail compose (cleaner format with links)
+// Format slot links as HTML for Gmail compose (multiple confirmation methods)
 function formatSlotLinksForGmail(slots) {
   return slots.map((slot, index) => {
     const date = new Date(slot.start);
@@ -397,8 +405,16 @@ function formatSlotLinksForGmail(slots) {
       minute: '2-digit',
       timeZoneName: 'short'
     });
-    return `${index + 1}. ${timeStr} - <a href="${slot.confirmLink}">Click here to confirm</a>`;
-  }).join('<br>');
+    
+    // Primary method: Web confirmation (if available) or Google Calendar
+    const primaryLink = slot.confirmLink && !slot.confirmLink.includes('your-domain.com') 
+      ? slot.confirmLink 
+      : slot.calendarLink;
+    
+    return `${index + 1}. <strong>${timeStr}</strong><br>
+    &nbsp;&nbsp;&nbsp;• <a href="${primaryLink}" style="color: #1a73e8;">📅 Add to Calendar & Confirm</a><br>
+    &nbsp;&nbsp;&nbsp;• <a href="${slot.mailtoLink}" style="color: #1a73e8;">✉️ Reply to Confirm</a>`;
+  }).join('<br><br>');
 }
 
 // Open Gmail reply draft

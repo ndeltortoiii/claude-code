@@ -176,10 +176,12 @@ async function handleFindSlots(request, sendResponse) {
       return;
     }
 
-    // Generate confirmation links for each slot
+    // Generate confirmation links for each slot (multiple methods for reliability)
     const slotsWithLinks = slots.map(slot => ({
       ...slot,
-      confirmLink: generateConfirmLink(slot, request.emailId, request.sender)
+      confirmLink: generateConfirmLink(slot, request.emailId, request.sender),
+      calendarLink: generateGoogleCalendarLink(slot, request.sender),
+      mailtoLink: generateMailtoConfirmation(slot, request.sender, userEmail)
     }));
 
     console.log('Sending slots to content script:', slotsWithLinks.length);
@@ -412,9 +414,15 @@ function selectDiverseSlots(allSlots, count) {
 // Generate confirmation link for slot
 function generateConfirmLink(slot, emailId, sender) {
   const token = generateToken(slot, emailId, sender);
-  // Use chrome-extension:// URL instead of external backend
-  const extensionId = chrome.runtime.id;
-  return `chrome-extension://${extensionId}/confirm.html?token=${encodeURIComponent(token)}`;
+  
+  // Option 1: Use a web-based confirmation page (recommended)
+  // Replace with your actual domain when you deploy the confirmation page
+  return `https://your-domain.com/confirm-meeting?token=${encodeURIComponent(token)}`;
+  
+  // Option 2: Use Google Calendar event creation link as fallback
+  // This creates a calendar event that the recipient can accept
+  // const calendarUrl = generateGoogleCalendarLink(slot, sender);
+  // return calendarUrl;
 }
 
 // Generate secure token for slot confirmation
@@ -422,6 +430,48 @@ function generateToken(slot, emailId, sender) {
   // Encode slot data in the token
   const data = JSON.stringify({ slot, emailId, sender, timestamp: Date.now() });
   return btoa(data);
+}
+
+// Generate Google Calendar link for direct event creation
+function generateGoogleCalendarLink(slot, sender) {
+  const startDate = new Date(slot.start);
+  const endDate = new Date(slot.end);
+  
+  // Format dates for Google Calendar (YYYYMMDDTHHMMSSZ)
+  const formatCalendarDate = (date) => {
+    return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  };
+  
+  const startFormatted = formatCalendarDate(startDate);
+  const endFormatted = formatCalendarDate(endDate);
+  
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: `Meeting with ${sender}`,
+    dates: `${startFormatted}/${endFormatted}`,
+    details: `Scheduled via AI Assistant Meeting Scheduler`,
+    location: 'To be determined'
+  });
+  
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+// Generate mailto link for email-based confirmation
+function generateMailtoConfirmation(slot, sender, userEmail) {
+  const startDate = new Date(slot.start);
+  const timeString = startDate.toLocaleString('en-US', {
+    weekday: 'long',
+    month: 'long', 
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+  
+  const subject = `CONFIRM: Meeting on ${timeString}`;
+  const body = `Hi,\n\nI confirm our meeting scheduled for:\n${timeString}\n\nPlease reply to confirm.\n\nBest regards`;
+  
+  return `mailto:${userEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 // Handle AI-based meeting detection
