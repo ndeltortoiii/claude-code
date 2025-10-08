@@ -3,6 +3,7 @@
   "name": "AI Assistant: Meeting Scheduler",
   "version": "1.0.0",
   "description": "Meeting scheduler that detects requests using keywords and automates scheduling from Gmail",
+  "key": "gaeecnmnonkndajginknebeglkadkkdf",
   "permissions": [
     "identity",
     "storage",
