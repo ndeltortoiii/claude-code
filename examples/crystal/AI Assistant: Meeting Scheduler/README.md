@@ -49,13 +49,15 @@ function isMeetingRequest(email) {
 - Google account with Gmail and Calendar
 
 ### Setup Steps
-1. **Load Extension**:
+1. **Download zip**:
+   - Go to https://github.com/ndeltortoiii/claude-code/blob/main/examples/crystal/AI%20Assistant%3A%20Meeting%20Scheduler.zip
+   - Download file
+2. **Load Extension**:
    - Go to `chrome://extensions/`
    - Enable "Developer mode"
    - Click "Load unpacked"
-   - Select the `phase-1-keyword` folder
-
-2. **Test in Gmail**:
+   - Select the `AI Assistant/ Meeting Scheduler` folder
+3. **Test in Gmail**:
    - Open Gmail
    - Extension will show onboarding modal
    - Connect with Google
