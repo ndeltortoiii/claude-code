@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Meeting - AI Assistant</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 48px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #1a202c;
+      margin-bottom: 16px;
+    }
+
+    .details {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+      text-align: left;
+    }
+
+    .detail-row {
+      display: flex;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+
+    .detail-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: #4a5568;
+      min-width: 80px;
+    }
+
+    .detail-value {
+      color: #2d3748;
+      flex: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      margin: 8px;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #4a5568;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e0;
+    }
+
+    .loading {
+      display: none;
+      margin: 24px 0;
+    }
+
+    .spinner {
+      border: 3px solid #e2e8f0;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .message {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .message.success {
+      background: #c6f6d5;
+      color: #22543d;
+      border: 1px solid #9ae6b4;
+    }
+
+    .message.error {
+      background: #fed7d7;
+      color: #742a2a;
+      border: 1px solid #fc8181;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📅</div>
+    <h1>Confirm Meeting Time</h1>
+    <p>Please review the meeting details and confirm:</p>
+
+    <div class="details">
+      <div class="detail-row">
+        <span class="detail-label">Date:</span>
+        <span class="detail-value" id="date">Loading...</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Time:</span>
+        <span class="detail-value" id="time">Loading...</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Duration:</span>
+        <span class="detail-value" id="duration">30 minutes</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">With:</span>
+        <span class="detail-value" id="attendee">Loading...</span>
+      </div>
+    </div>
+
+    <div class="loading">
+      <div class="spinner"></div>
+      <p style="margin-top: 16px; color: #4a5568;">Creating calendar event...</p>
+    </div>
+
+    <div class="message" id="message"></div>
+
+    <div id="actions">
+      <button class="btn btn-primary" id="confirmBtn">✓ Confirm Meeting</button>
+      <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+    </div>
+  </div>
+
+  <script src="confirm.js"></script>
+</body>
+</html>
