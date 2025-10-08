@@ -3,7 +3,7 @@
   "name": "AI Assistant: Meeting Scheduler",
   "version": "1.0.0",
   "description": "Meeting scheduler that detects requests using keywords and automates scheduling from Gmail",
-  "key": "gaeecnmnonkndajginknebeglkadkkdf",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA00bI5yNVL4l6U1guBYGKK0JezxawI6Fqh8YUDFYIFS+nvOVOklhW2mq3S3So7vFPxk3qD41TmQbW+XpUNRU+u1PnWStPXdofBwcEmjpAX3Z84xmSAQcItYrN7WNusgOuTKodMGa8jYb5OTzjwLSX0BUZIJEscCyxTUW5PkfKq7p9Dv0IpMlFzPzwENm9gHAHsa0HbsUB1tiEGCE/8SG/v0yW0w2bOIJxayMfFICEld0B4AtnpRboIoE7tweeNAUFCo9eFHRLUl9pGLXkGYZi2GgZ91aMQAfOKpsut58MRcP7c3EUjxXe1MPRrhz5HI16w0YAPbTVUQ5EF5UpH7T4swIDAQAB",
   "permissions": [
     "identity",
     "storage",
